@@ -21,6 +21,7 @@ spec:
       labels:
         {{- include "spegel.selectorLabels" . | nindent 8 }}
     spec:
+      hostNetwork: true
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -109,6 +110,7 @@ spec:
             protocol: TCP
           - name: router
             containerPort: {{ .Values.service.router.port }}
+            hostPort: {{ .Values.service.router.hostPort }}
             protocol: TCP
           - name: metrics
             containerPort: {{ .Values.service.metrics.port }}

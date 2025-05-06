@@ -36,3 +36,25 @@ spec:
       targetPort: registry
       nodePort: {{ .Values.service.registry.nodePort }}
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "spegel.fullname" . }}-bootstrap
+  namespace: {{ include "spegel.namespace" . }}
+  labels:
+    {{- include "spegel.labels" . | nindent 4 }}
+  {{- if .Values.service.registry.topologyAwareHintsEnabled }}
+  annotations:
+    service.kubernetes.io/topology-mode: "auto"
+  {{- end }}
+spec:
+  type: NodePort
+  selector:
+    {{- include "spegel.selectorLabels" . | nindent 4 }}
+  ports:
+    - name: router
+      port: {{ .Values.service.router.port }}
+      targetPort: router
+      nodePort: {{ .Values.service.router.nodePort }}
+      protocol: TCP
