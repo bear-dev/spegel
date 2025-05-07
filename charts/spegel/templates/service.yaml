@@ -44,12 +44,17 @@ metadata:
   namespace: {{ include "spegel.namespace" . }}
   labels:
     {{- include "spegel.labels" . | nindent 4 }}
+  {{- if .Values.service.router.topologyAwareHintsEnabled }}
+  annotations:
+    service.kubernetes.io/topology-mode: "auto"
+  {{- end }}
 spec:
+  type: NodePort
   selector:
     {{- include "spegel.selectorLabels" . | nindent 4 }}
-  clusterIP: None
-  publishNotReadyAddresses: true
   ports:
     - name: router
       port: {{ .Values.service.router.port }}
+      targetPort: router
+      nodePort: {{ .Values.service.router.nodePort }}
       protocol: TCP

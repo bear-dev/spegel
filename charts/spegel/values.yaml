@@ -4,7 +4,7 @@ image:
   # -- Image Pull Policy.
   pullPolicy: IfNotPresent
   # -- Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "v0.2.0"
   # -- Image digest.
   digest: ""
 
@@ -48,16 +48,21 @@ service:
     # -- Override the NODE_ID environment variable. It defaults to the field status.hostIP
     nodeIp: ""
     # -- Port to expose the registry via the service.
-    port: 5000
+    port: 30011
     # -- Node port to expose the registry via the service.
-    nodePort: 30021
+    nodePort: 30010
     # -- Local host port to expose the registry.
-    hostPort: 30020
+    hostPort: 30011
     # -- If true adds topology aware hints annotation to node port service.
     topologyAwareHintsEnabled: true
   router:
-    # -- Port to expose the router via the service.
-    port: 5001
+    port: 30021
+    # -- Node port to expose the registry via the service.
+    nodePort: 30020
+    # -- Local host port to expose the registry.
+    hostPort: 30021
+    # -- If true adds topology aware hints annotation to node port service.
+    topologyAwareHintsEnabled: true
   metrics:
     # -- Port to expose the metrics via the service.
     port: 9090
